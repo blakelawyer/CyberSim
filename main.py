@@ -1,15 +1,14 @@
 import pygame as pg
 import sys
 from os import path
-
 import pygame.mouse
-
 import calculation
 import settings
 from settings import *
 from sprites import *
 
 FPS = 60
+
 
 class Game:
     def __init__(self):
@@ -24,17 +23,21 @@ class Game:
         self.speed_down_button = Button(15, 125, "down-arrow.png")
         self.pause_button = Button(15, 185, "pause-button.png")
 
-        self.lumber_button = Button(15, 245, "lumber.png")
-        self.nuclear_button = Button(15, 305, "nuclear.png")
-        self.agriculture_button = Button(15, 365, "agriculture.png")
-        self.chemical_button = Button(15, 425, "chemical.png")
-        self.mining_button = Button(15, 485, "mining.png")
+        self.neighborhood_button = Button(15, 245, "pause-button.png")
+        self.city_button = Button(15, 305, "pause-button.png")
+        self.lumber_button = Button(15, 365, "lumber.png")
+        self.nuclear_button = Button(15, 425, "nuclear.png")
+        self.agriculture_button = Button(15, 485, "agriculture.png")
+        self.chemical_button = Button(15, 545, "chemical.png")
+        self.mining_button = Button(15, 605, "mining.png")
 
         self.all_sprites = pg.sprite.Group()
         self.walls = pg.sprite.Group()
         self.workers = pg.sprite.Group()
 
         self.paused = False
+        self.view = 'neighborhood'
+
         self.month = 0
         self.day = 0
         self.hour = 0
@@ -42,6 +45,10 @@ class Game:
 
     def load_data(self):
         game_folder = path.dirname(__file__)
+        self.neighborhood_map_data = []
+        with open(path.join(game_folder, 'neighborhood-map.txt'), 'rt') as f:
+            for line in f:
+                self.neighborhood_map_data.append(line)
         self.city_map_data = []
         with open(path.join(game_folder, 'city-map.txt'), 'rt') as f:
             for line in f:
@@ -67,13 +74,35 @@ class Game:
             for line in f:
                 self.mining_map_data.append(line)
 
+    def setup(self):
+        for worker in range(calculation.lumber_workers):
+            Worker(self, 2, 9 + worker, 'lumber', 'neighborhood')
+        for worker in range(calculation.nuclear_workers):
+            Worker(self, 2, 9 + worker, 'nuclear', 'neighborhood')
+        for worker in range(calculation.agriculture_workers):
+            Worker(self, 2, 9 + worker, 'agriculture', 'neighborhood')
+        for worker in range(calculation.chemical_workers):
+            Worker(self, 2, 9 + worker, 'chemical', 'neighborhood')
+        for worker in range(calculation.mining_workers):
+            Worker(self, 2, 9 + worker, 'mining', 'neighborhood')
+
+    def neighborhood_view(self):
+        for wall in self.walls:
+            wall.kill()
+        for row, tiles in enumerate(self.neighborhood_map_data):
+            for col, tile in enumerate(tiles):
+                if tile == '1':
+                    Wall(self, col, row)
+        self.view = 'neighborhood'
+
     def city_view(self):
+        for wall in self.walls:
+            wall.kill()
         for row, tiles in enumerate(self.city_map_data):
             for col, tile in enumerate(tiles):
                 if tile == '1':
                     Wall(self, col, row)
-                if tile == 'W':
-                    Worker(self, col, row)
+        self.view = 'city'
 
     def lumber_view(self):
         for wall in self.walls:
@@ -82,6 +111,7 @@ class Game:
             for col, tile in enumerate(tiles):
                 if tile == '1':
                     Wall(self, col, row)
+        self.view = 'lumber'
 
     def nuclear_view(self):
         for wall in self.walls:
@@ -90,6 +120,7 @@ class Game:
             for col, tile in enumerate(tiles):
                 if tile == '1':
                     Wall(self, col, row)
+        self.view = 'nuclear'
 
     def agriculture_view(self):
         for wall in self.walls:
@@ -98,6 +129,7 @@ class Game:
             for col, tile in enumerate(tiles):
                 if tile == '1':
                     Wall(self, col, row)
+        self.view = 'agriculture'
 
     def chemical_view(self):
         for wall in self.walls:
@@ -106,6 +138,7 @@ class Game:
             for col, tile in enumerate(tiles):
                 if tile == '1':
                     Wall(self, col, row)
+        self.view = 'chemical'
 
     def mining_view(self):
         for wall in self.walls:
@@ -114,6 +147,7 @@ class Game:
             for col, tile in enumerate(tiles):
                 if tile == '1':
                     Wall(self, col, row)
+        self.view = 'mining'
 
     def run(self):
         # game loop - set self.playing = False to end the game
@@ -147,7 +181,6 @@ class Game:
         sys.exit()
 
     def update(self):
-        # update portion of the game loop
         self.all_sprites.update()
 
     def draw_grid(self):
@@ -159,7 +192,12 @@ class Game:
     def draw(self):
         self.screen.fill(BGCOLOR)
         self.draw_grid()
-        self.all_sprites.draw(self.screen)
+        for sprite in self.all_sprites:
+            if isinstance(sprite, Worker):
+                if self.view == sprite.location:
+                    sprite.draw(self.screen)
+            else:
+                sprite.draw(self.screen)
 
         if self.speed_up_button.draw(self.screen):
             if settings.FPS < 1000:
@@ -172,10 +210,14 @@ class Game:
                 self.paused = False
             else:
                 self.paused = True
-                while(self.paused):
+                while (self.paused):
                     self.events()
                     self.draw()
 
+        if self.neighborhood_button.draw(self.screen):
+            self.neighborhood_view()
+        if self.city_button.draw(self.screen):
+            self.city_view()
         if self.lumber_button.draw(self.screen):
             self.lumber_view()
         if self.nuclear_button.draw(self.screen):
@@ -187,13 +229,11 @@ class Game:
         if self.mining_button.draw(self.screen):
             self.mining_view()
 
-
         show_resources(self.screen)
         show_time(self, self.screen)
         pg.display.flip()
 
     def events(self):
-        # catch all events here
         for event in pg.event.get():
             if event.type == pg.QUIT:
                 self.quit()
@@ -228,7 +268,6 @@ class Button:
 
 
 def show_resources(screen):
-
     font = pg.font.SysFont('Arial', 24)
 
     text = font.render("Lumber: " + str(calculation.lumber), True, WHITE, BLACK)
@@ -263,8 +302,8 @@ def show_time(game, screen):
     screen.blit(text, (670, 720))
 
 
-# create the game object
 g = Game()
 while True:
-    g.city_view()
+    g.setup()
+    g.neighborhood_view()
     g.run()

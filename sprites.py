@@ -16,9 +16,12 @@ class Wall(pg.sprite.Sprite):
         self.rect.x = x * TILESIZE
         self.rect.y = y * TILESIZE
 
+    def draw(self, screen):
+        screen.blit(self.image, self.rect)
+
 
 class Worker(pg.sprite.Sprite):
-    def __init__(self, game, x, y):
+    def __init__(self, game, x, y, job, location):
         self.groups = game.all_sprites, game.workers
         pg.sprite.Sprite.__init__(self, self.groups)
         self.game = game
@@ -29,6 +32,8 @@ class Worker(pg.sprite.Sprite):
         self.y = y
         self.rect.x = x * TILESIZE
         self.rect.y = y * TILESIZE
+        self.job = job
+        self.location = location
 
     def collide_with_walls(self, dx=0, dy=0):
         for wall in self.game.walls:
@@ -56,6 +61,9 @@ class Worker(pg.sprite.Sprite):
 
     def update(self):
         self.random_move()
+
+    def draw(self, screen):
+        screen.blit(self.image, self.rect)
 
 
 
