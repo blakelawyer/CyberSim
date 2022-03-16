@@ -87,6 +87,11 @@ class Game:
             Worker(self, 2, 9 + worker, 'mining', 'neighborhood')
 
     def neighborhood_view(self):
+        settings.TILESIZE = 16
+        for worker in self.workers:
+            worker.image = pg.Surface((settings.TILESIZE, settings.TILESIZE))
+            worker.image.fill(RED)
+            worker.rect = worker.image.get_rect()
         for wall in self.walls:
             wall.kill()
         for row, tiles in enumerate(self.neighborhood_map_data):
@@ -96,6 +101,7 @@ class Game:
         self.view = 'neighborhood'
 
     def city_view(self):
+        settings.TILESIZE = 16
         for wall in self.walls:
             wall.kill()
         for row, tiles in enumerate(self.city_map_data):
@@ -105,6 +111,11 @@ class Game:
         self.view = 'city'
 
     def lumber_view(self):
+        settings.TILESIZE = 32
+        for worker in self.workers:
+            worker.image = pg.Surface((settings.TILESIZE, settings.TILESIZE))
+            worker.image.fill(RED)
+            worker.rect = worker.image.get_rect()
         for wall in self.walls:
             wall.kill()
         for row, tiles in enumerate(self.lumber_map_data):
@@ -114,6 +125,11 @@ class Game:
         self.view = 'lumber'
 
     def nuclear_view(self):
+        settings.TILESIZE = 32
+        for worker in self.workers:
+            worker.image = pg.Surface((settings.TILESIZE, settings.TILESIZE))
+            worker.image.fill(RED)
+            worker.rect = worker.image.get_rect()
         for wall in self.walls:
             wall.kill()
         for row, tiles in enumerate(self.nuclear_map_data):
@@ -123,6 +139,11 @@ class Game:
         self.view = 'nuclear'
 
     def agriculture_view(self):
+        settings.TILESIZE = 32
+        for worker in self.workers:
+            worker.image = pg.Surface((settings.TILESIZE, settings.TILESIZE))
+            worker.image.fill(RED)
+            worker.rect = worker.image.get_rect()
         for wall in self.walls:
             wall.kill()
         for row, tiles in enumerate(self.agriculture_map_data):
@@ -132,6 +153,11 @@ class Game:
         self.view = 'agriculture'
 
     def chemical_view(self):
+        settings.TILESIZE = 32
+        for worker in self.workers:
+            worker.image = pg.Surface((settings.TILESIZE, settings.TILESIZE))
+            worker.image.fill(RED)
+            worker.rect = worker.image.get_rect()
         for wall in self.walls:
             wall.kill()
         for row, tiles in enumerate(self.chemical_map_data):
@@ -141,6 +167,11 @@ class Game:
         self.view = 'chemical'
 
     def mining_view(self):
+        settings.TILESIZE = 32
+        for worker in self.workers:
+            worker.image = pg.Surface((settings.TILESIZE, settings.TILESIZE))
+            worker.image.fill(RED)
+            worker.rect = worker.image.get_rect()
         for wall in self.walls:
             wall.kill()
         for row, tiles in enumerate(self.mining_map_data):
@@ -150,7 +181,6 @@ class Game:
         self.view = 'mining'
 
     def run(self):
-        # game loop - set self.playing = False to end the game
         tick = 0
         self.playing = True
         while self.playing:
@@ -184,9 +214,9 @@ class Game:
         self.all_sprites.update()
 
     def draw_grid(self):
-        for x in range(0, WIDTH, TILESIZE):
+        for x in range(0, WIDTH, settings.TILESIZE):
             pg.draw.line(self.screen, LIGHTGREY, (x, 0), (x, HEIGHT))
-        for y in range(0, HEIGHT, TILESIZE):
+        for y in range(0, HEIGHT, settings.TILESIZE):
             pg.draw.line(self.screen, LIGHTGREY, (0, y), (WIDTH, y))
 
     def draw(self):

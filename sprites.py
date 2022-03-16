@@ -2,7 +2,6 @@ import pygame as pg
 from settings import *
 import random
 
-
 class Wall(pg.sprite.Sprite):
     def __init__(self, game, x, y):
         self.groups = game.all_sprites, game.walls
