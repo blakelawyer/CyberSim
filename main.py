@@ -7,8 +7,6 @@ import settings
 from settings import *
 from sprites import *
 
-FPS = 60
-
 
 class Game:
     def __init__(self):
@@ -23,8 +21,8 @@ class Game:
         self.speed_down_button = Button(15, 125, "down-arrow.png")
         self.pause_button = Button(15, 185, "pause-button.png")
 
-        self.neighborhood_button = Button(15, 245, "pause-button.png")
-        self.city_button = Button(15, 305, "pause-button.png")
+        self.neighborhood_button = Button(15, 245, "neighborhood.png")
+        self.city_button = Button(15, 305, "city.png")
         self.lumber_button = Button(15, 365, "lumber.png")
         self.nuclear_button = Button(15, 425, "nuclear.png")
         self.agriculture_button = Button(15, 485, "agriculture.png")
@@ -76,7 +74,7 @@ class Game:
 
     def setup(self):
         for worker in range(calculation.lumber_workers):
-            Worker(self, 2, 9 + worker, 'lumber', 'neighborhood')
+            Worker(self, 10, 9 + worker, 'lumber', 'neighborhood')
         for worker in range(calculation.nuclear_workers):
             Worker(self, 2, 9 + worker, 'nuclear', 'neighborhood')
         for worker in range(calculation.agriculture_workers):

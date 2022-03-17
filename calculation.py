@@ -6,11 +6,11 @@ agriculture = 0
 chemical = 0
 mining = 0
 
-lumber_workers = 5
-nuclear_workers = 5
-agriculture_workers = 5
-chemical_workers = 5
-mining_workers = 5
+lumber_workers = 1
+nuclear_workers = 0
+agriculture_workers = 0
+chemical_workers = 0
+mining_workers = 0
 
 input_output_table_0 = [[5, 0, 5, 0, 1],
                       [2, 1, 1, 3, 2],
