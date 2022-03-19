@@ -73,109 +73,118 @@ class Game:
                 self.mining_map_data.append(line)
 
     def setup(self):
+
         for worker in range(calculation.lumber_workers):
-            Worker(self, 10, 9 + worker, 'lumber', 'neighborhood')
+            Worker(self, 32, 24, 'lumber', 'neighborhood')
         for worker in range(calculation.nuclear_workers):
-            Worker(self, 2, 9 + worker, 'nuclear', 'neighborhood')
+            Worker(self, 32, 24, 'nuclear', 'neighborhood')
         for worker in range(calculation.agriculture_workers):
-            Worker(self, 2, 9 + worker, 'agriculture', 'neighborhood')
+            Worker(self, 32, 24, 'agriculture', 'neighborhood')
         for worker in range(calculation.chemical_workers):
-            Worker(self, 2, 9 + worker, 'chemical', 'neighborhood')
+            Worker(self, 32, 24, 'chemical', 'neighborhood')
         for worker in range(calculation.mining_workers):
-            Worker(self, 2, 9 + worker, 'mining', 'neighborhood')
+            Worker(self, 32, 24, 'mining', 'neighborhood')
+
+        settings.TILESIZE = 16
+        for row, tiles in enumerate(self.neighborhood_map_data):
+            for col, tile in enumerate(tiles):
+                if tile == '1':
+                    Wall(self, col, row, "neighborhood")
+
+        settings.TILESIZE = 16
+        for row, tiles in enumerate(self.city_map_data):
+            for col, tile in enumerate(tiles):
+                if tile == '1':
+                    Wall(self, col, row, "city")
+
+        settings.TILESIZE = 32
+        for row, tiles in enumerate(self.lumber_map_data):
+            for col, tile in enumerate(tiles):
+                if tile == '1':
+                    Wall(self, col, row, "lumber")
+
+        settings.TILESIZE = 32
+        for row, tiles in enumerate(self.nuclear_map_data):
+            for col, tile in enumerate(tiles):
+                if tile == '1':
+                    Wall(self, col, row, "nuclear")
+
+        settings.TILESIZE = 32
+        for row, tiles in enumerate(self.agriculture_map_data):
+            for col, tile in enumerate(tiles):
+                if tile == '1':
+                    Wall(self, col, row, "agriculture")
+
+        settings.TILESIZE = 32
+        for row, tiles in enumerate(self.chemical_map_data):
+            for col, tile in enumerate(tiles):
+                if tile == '1':
+                    Wall(self, col, row, "chemical")
+
+        settings.TILESIZE = 32
+        for row, tiles in enumerate(self.mining_map_data):
+            for col, tile in enumerate(tiles):
+                if tile == '1':
+                    Wall(self, col, row, "mining")
+
+        settings.TILESIZE = 16
 
     def neighborhood_view(self):
         settings.TILESIZE = 16
         for worker in self.workers:
-            worker.image = pg.Surface((settings.TILESIZE, settings.TILESIZE))
-            worker.image.fill(RED)
-            worker.rect = worker.image.get_rect()
-        for wall in self.walls:
-            wall.kill()
-        for row, tiles in enumerate(self.neighborhood_map_data):
-            for col, tile in enumerate(tiles):
-                if tile == '1':
-                    Wall(self, col, row)
+            if worker.location == "neighborhood":
+                worker.image = pg.Surface((settings.TILESIZE, settings.TILESIZE))
+                worker.image.fill(worker.color)
+                worker.rect = worker.image.get_rect()
         self.view = 'neighborhood'
 
     def city_view(self):
         settings.TILESIZE = 16
-        for wall in self.walls:
-            wall.kill()
-        for row, tiles in enumerate(self.city_map_data):
-            for col, tile in enumerate(tiles):
-                if tile == '1':
-                    Wall(self, col, row)
         self.view = 'city'
 
     def lumber_view(self):
         settings.TILESIZE = 32
         for worker in self.workers:
-            worker.image = pg.Surface((settings.TILESIZE, settings.TILESIZE))
-            worker.image.fill(RED)
-            worker.rect = worker.image.get_rect()
-        for wall in self.walls:
-            wall.kill()
-        for row, tiles in enumerate(self.lumber_map_data):
-            for col, tile in enumerate(tiles):
-                if tile == '1':
-                    Wall(self, col, row)
+            if worker.location == "lumber":
+                worker.image = pg.Surface((settings.TILESIZE, settings.TILESIZE))
+                worker.image.fill(worker.color)
+                worker.rect = worker.image.get_rect()
         self.view = 'lumber'
 
     def nuclear_view(self):
         settings.TILESIZE = 32
         for worker in self.workers:
-            worker.image = pg.Surface((settings.TILESIZE, settings.TILESIZE))
-            worker.image.fill(RED)
-            worker.rect = worker.image.get_rect()
-        for wall in self.walls:
-            wall.kill()
-        for row, tiles in enumerate(self.nuclear_map_data):
-            for col, tile in enumerate(tiles):
-                if tile == '1':
-                    Wall(self, col, row)
+            if worker.location == "nuclear":
+                worker.image = pg.Surface((settings.TILESIZE, settings.TILESIZE))
+                worker.image.fill(worker.color)
+                worker.rect = worker.image.get_rect()
         self.view = 'nuclear'
 
     def agriculture_view(self):
         settings.TILESIZE = 32
         for worker in self.workers:
-            worker.image = pg.Surface((settings.TILESIZE, settings.TILESIZE))
-            worker.image.fill(RED)
-            worker.rect = worker.image.get_rect()
-        for wall in self.walls:
-            wall.kill()
-        for row, tiles in enumerate(self.agriculture_map_data):
-            for col, tile in enumerate(tiles):
-                if tile == '1':
-                    Wall(self, col, row)
+            if worker.location == "agriculture":
+                worker.image = pg.Surface((settings.TILESIZE, settings.TILESIZE))
+                worker.image.fill(worker.color)
+                worker.rect = worker.image.get_rect()
         self.view = 'agriculture'
 
     def chemical_view(self):
         settings.TILESIZE = 32
         for worker in self.workers:
-            worker.image = pg.Surface((settings.TILESIZE, settings.TILESIZE))
-            worker.image.fill(RED)
-            worker.rect = worker.image.get_rect()
-        for wall in self.walls:
-            wall.kill()
-        for row, tiles in enumerate(self.chemical_map_data):
-            for col, tile in enumerate(tiles):
-                if tile == '1':
-                    Wall(self, col, row)
+            if worker.location == "chemical":
+                worker.image = pg.Surface((settings.TILESIZE, settings.TILESIZE))
+                worker.image.fill(worker.color)
+                worker.rect = worker.image.get_rect()
         self.view = 'chemical'
 
     def mining_view(self):
         settings.TILESIZE = 32
         for worker in self.workers:
-            worker.image = pg.Surface((settings.TILESIZE, settings.TILESIZE))
-            worker.image.fill(RED)
-            worker.rect = worker.image.get_rect()
-        for wall in self.walls:
-            wall.kill()
-        for row, tiles in enumerate(self.mining_map_data):
-            for col, tile in enumerate(tiles):
-                if tile == '1':
-                    Wall(self, col, row)
+            if worker.location == "mining":
+                worker.image = pg.Surface((settings.TILESIZE, settings.TILESIZE))
+                worker.image.fill(worker.color)
+                worker.rect = worker.image.get_rect()
         self.view = 'mining'
 
     def run(self):
@@ -224,8 +233,9 @@ class Game:
             if isinstance(sprite, Worker):
                 if self.view == sprite.location:
                     sprite.draw(self.screen)
-            else:
-                sprite.draw(self.screen)
+            elif isinstance(sprite, Wall):
+                if self.view == sprite.location:
+                    sprite.draw(self.screen)
 
         if self.speed_up_button.draw(self.screen):
             if settings.FPS < 1000:

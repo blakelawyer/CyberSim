@@ -6,6 +6,9 @@ LIGHTGREY = (100, 100, 100)
 GREEN = (0, 255, 0)
 RED = (255, 0, 0)
 YELLOW = (255, 255, 0)
+BLUE = (0, 0, 255)
+CHOCOLATE = (210, 105, 30)
+MAROON = (128, 0, 0)
 
 # Game Settings
 WIDTH = 1024   # 16 * 64 or 32 * 32 or 64 * 16
