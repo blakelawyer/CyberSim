@@ -149,6 +149,8 @@ class Game:
                 worker.image = pg.Surface((settings.TILESIZE, settings.TILESIZE))
                 worker.image.fill(worker.color)
                 worker.rect = worker.image.get_rect()
+                worker.rect.x = worker.x * settings.TILESIZE
+                worker.rect.y = worker.y * settings.TILESIZE
         self.view = 'lumber'
 
     def nuclear_view(self):
@@ -158,6 +160,8 @@ class Game:
                 worker.image = pg.Surface((settings.TILESIZE, settings.TILESIZE))
                 worker.image.fill(worker.color)
                 worker.rect = worker.image.get_rect()
+                worker.rect.x = worker.x * settings.TILESIZE
+                worker.rect.y = worker.y * settings.TILESIZE
         self.view = 'nuclear'
 
     def agriculture_view(self):
@@ -167,6 +171,8 @@ class Game:
                 worker.image = pg.Surface((settings.TILESIZE, settings.TILESIZE))
                 worker.image.fill(worker.color)
                 worker.rect = worker.image.get_rect()
+                worker.rect.x = worker.x * settings.TILESIZE
+                worker.rect.y = worker.y * settings.TILESIZE
         self.view = 'agriculture'
 
     def chemical_view(self):
@@ -176,6 +182,8 @@ class Game:
                 worker.image = pg.Surface((settings.TILESIZE, settings.TILESIZE))
                 worker.image.fill(worker.color)
                 worker.rect = worker.image.get_rect()
+                worker.rect.x = worker.x * settings.TILESIZE
+                worker.rect.y = worker.y * settings.TILESIZE
         self.view = 'chemical'
 
     def mining_view(self):
@@ -185,6 +193,8 @@ class Game:
                 worker.image = pg.Surface((settings.TILESIZE, settings.TILESIZE))
                 worker.image.fill(worker.color)
                 worker.rect = worker.image.get_rect()
+                worker.rect.x = worker.x * settings.TILESIZE
+                worker.rect.y = worker.y * settings.TILESIZE
         self.view = 'mining'
 
     def run(self):
@@ -198,11 +208,17 @@ class Game:
             tick += 1
             self.minute += 1
             if tick % 60 == 0:
-                calculation.lumber_hour()
-                calculation.nuclear_hour()
-                calculation.agriculture_hour()
-                calculation.chemical_hour()
-                calculation.mining_hour()
+                for worker in self.workers:
+                    if worker.job == "lumber" and worker.working:
+                        calculation.lumber_hour()
+                    elif worker.job == "nuclear" and worker.working:
+                        calculation.nuclear_hour()
+                    elif worker.job == "agriculture" and worker.working:
+                        calculation.agriculture_hour()
+                    elif worker.job == "chemical" and worker.working:
+                        calculation.chemical_hour()
+                    elif worker.job == "mining" and worker.working:
+                        calculation.mining_hour()
             if self.minute % 60 == 0 and self.minute > 0:
                 self.minute = 0
                 self.hour += 1
@@ -288,54 +304,40 @@ class Button:
         self.clicked = False
 
     def draw(self, screen):
-
         action = False
         pos = pg.mouse.get_pos()
-
         if self.rect.collidepoint(pos):
             if pg.mouse.get_pressed()[0] == 1 and self.clicked == False:
                 self.clicked = True
                 action = True
-
         if pygame.mouse.get_pressed()[0] == 0:
             self.clicked = False
-
         screen.blit(self.image, (self.rect.x, self.rect.y))
-
         return action
 
 
 def show_resources(screen):
     font = pg.font.SysFont('Arial', 24)
-
     text = font.render("Lumber: " + str(calculation.lumber), True, WHITE, BLACK)
     screen.blit(text, (70, 20))
-
     text = font.render("Nuclear: " + str(calculation.nuclear), True, WHITE, BLACK)
     screen.blit(text, (270, 20))
-
     text = font.render("Agriculture: " + str(calculation.agriculture), True, WHITE, BLACK)
     screen.blit(text, (470, 20))
-
     text = font.render("Chemical: " + str(calculation.chemical), True, WHITE, BLACK)
     screen.blit(text, (670, 20))
-
     text = font.render("Mining: " + str(calculation.mining), True, WHITE, BLACK)
     screen.blit(text, (870, 20))
 
 
 def show_time(game, screen):
     font = pg.font.SysFont('Arial', 24)
-
     text = font.render("Month: " + str(game.month), True, WHITE, BLACK)
     screen.blit(text, (70, 720))
-
     text = font.render("Day: " + str(game.day), True, WHITE, BLACK)
     screen.blit(text, (270, 720))
-
     text = font.render("Hour: " + str(game.hour), True, WHITE, BLACK)
     screen.blit(text, (470, 720))
-
     text = font.render("Minute: " + str(game.minute), True, WHITE, BLACK)
     screen.blit(text, (670, 720))
 
