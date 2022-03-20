@@ -1,5 +1,6 @@
 import pygame as pg
 
+import calculation
 import settings
 from settings import *
 import random
@@ -28,22 +29,31 @@ class Worker(pg.sprite.Sprite):
         self.groups = game.all_sprites, game.workers
         pg.sprite.Sprite.__init__(self, self.groups)
         self.game = game
-        #self.image = pg.Surface((TILESIZE, TILESIZE))
         if job == "lumber":
             self.image = pg.image.load("red-dino16.png")
             self.pic = "red-dino"
+            self.working_days = calculation.lumber_days
+            self.working_hours = calculation.lumber_hours
         elif job == "nuclear":
             self.image = pg.image.load("green-dino16.png")
             self.pic = "green-dino"
+            self.working_days = calculation.nuclear_days
+            self.working_hours = calculation.nuclear_hours
         elif job == "agriculture":
             self.image = pg.image.load("blue-dino16.png")
             self.pic = "blue-dino"
+            self.working_days = calculation.agriculture_days
+            self.working_hours = calculation.agriculture_hours
         elif job == "chemical":
             self.image = pg.image.load("yellow-dino16.png")
             self.pic = "yellow-dino"
+            self.working_days = calculation.chemical_days
+            self.working_hours = calculation.chemical_hours
         else:
             self.image = pg.image.load("black-dino16.png")
             self.pic = "black-dino"
+            self.working_days = calculation.mining_days
+            self.working_hours = calculation.mining_hours
         self.rect = self.image.get_rect()
         self.x = x
         self.y = y
@@ -98,11 +108,12 @@ class Worker(pg.sprite.Sprite):
             self.working = False
         # If it's time to commute to work, give workers a path.
         if self.game.hour == 2 and self.game.minute == 0 and self.location == "neighborhood":
-            self.x_goal = 59
-            self.y_goal = 43
-            self.commuting_to_work = True
+            if self.game.day in self.working_days:
+                self.x_goal = 59
+                self.y_goal = 43
+                self.commuting_to_work = True
         # If it's time to to commute back home, give workers a path.
-        if self.game.hour == 11 and self.game.minute == 0:
+        if self.game.hour == (3 + self.working_hours) and self.game.minute == 0 and self.working:
             self.x_goal = 29
             self.y_goal = 21
             self.commuting_home = True

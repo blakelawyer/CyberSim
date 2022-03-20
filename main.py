@@ -45,6 +45,7 @@ class Game:
         self.view = 'neighborhood'
 
         self.month = 0
+        self.week = 0
         self.day = 0
         self.hour = 0
         self.minute = 0
@@ -222,8 +223,11 @@ class Game:
             if self.hour % 16 == 0 and self.hour > 0:
                 self.hour = 0
                 self.day += 1
-            if self.day % 28 == 0 and self.day > 0:
+            if self.day % 7 == 0 and self.day > 0:
                 self.day = 0
+                self.week += 1
+            if self.week % 4 == 0 and self.month > 0:
+                self.week = 0
                 self.month += 1
 
     def quit(self):

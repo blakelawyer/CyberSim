@@ -82,3 +82,26 @@ def bfs(self, goalx, goaly):
                     path.append('N')
 
             return path
+
+def labor_calculation(input_output_table, demand):
+    output_table = input_output_table[-1]
+    input_table = input_output_table[:len(input_output_table) - 1]
+    A = np.zeros((len(input_table), len(input_table[0])))
+
+    for row in range(len(input_table)):
+        for column in range(len(input_table[0])):
+            A[row][column] = input_output_table[row][column] / output_table[column]
+
+    d = np.zeros((1, len(demand)))
+
+    for goal in range(len(demand)):
+        d[0][goal] = demand[goal] / output_table[goal]
+
+    d = np.transpose(d)
+    I = np.identity(len(input_table[0]))
+    x = np.dot(np.linalg.inv(np.subtract(I, A)), d)
+
+    print(x)
+
+
+labor_calculation(input_output_table_0, demand_0)

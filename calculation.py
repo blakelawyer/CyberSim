@@ -1,5 +1,3 @@
-import numpy as np
-
 lumber = 0
 nuclear = 0
 agriculture = 0
@@ -12,6 +10,33 @@ agriculture_workers = 5
 chemical_workers = 5
 mining_workers = 5
 
+lumber_hours = 8
+nuclear_hours = 8
+agriculture_hours = 8
+chemical_hours = 8
+mining_hours = 8
+
+lumber_days = [0, 1, 2, 3, 4]
+nuclear_days = [0, 1, 2, 3, 4]
+agriculture_days = [0, 1, 2, 3, 4]
+chemical_days = [0, 1, 2, 3, 4]
+mining_days = [0, 1, 2, 3, 4]
+
+# if self.day % 7 == 0:
+# print("Monday")
+# if self.day % 7 == 1:
+# print("Tuesday")
+# if self.day % 7 == 2:
+# print("Wednesday")
+# if self.day % 7 == 3:
+# print("Thursday")
+# if self.day % 7 == 4:
+# print("Friday")
+# if self.day % 7 == 5:
+# print("Saturday")
+# if self.day % 7 == 6:
+# print("Sunday")
+
 net_lumber = 560
 net_nuclear = 240
 net_agriculture = 800
@@ -19,38 +44,18 @@ net_chemical = 640
 net_mining = 320
 
 input_output_table_0 = [[5, 0, 5, 0, 1],
-                      [2, 1, 1, 3, 2],
-                      [15, 10, 20, 10, 25],
-                      [0, 5, 3, 15, 1],
-                      [2, 2, 1, 5, 2],
-                      [25, 15, 100, 40, 20]]
+                        [2, 1, 1, 3, 2],
+                        [15, 10, 20, 10, 25],
+                        [0, 5, 3, 15, 1],
+                        [2, 2, 1, 5, 2],
+                        [25, 15, 100, 40, 20]]
 
 demand_0 = [100000, 100000, 100000, 100000, 100000]
 
 
-def labor_calculation(input_output_table, demand):
-
-    output_table = input_output_table[-1]
-    input_table = input_output_table[:len(input_output_table) - 1]
-    A = np.zeros((len(input_table), len(input_table[0])))
-
-    for row in range(len(input_table)):
-        for column in range(len(input_table[0])):
-            A[row][column] = input_output_table[row][column] / output_table[column]
-
-    d = np.zeros((1, len(demand)))
-
-    for goal in range(len(demand)):
-        d[0][goal] = demand[goal] / output_table[goal]
-
-    d = np.transpose(d)
-    I = np.identity(len(input_table[0]))
-    x = np.dot(np.linalg.inv(np.subtract(I, A)), d)
-
-    print(x)
-
-
-#labor_calculation(input_output_table_0, demand_0)
+def net_lumber_calc():
+    return (25 * lumber_workers * lumber_hours) - (5 * lumber_workers * lumber_hours) - (
+                5 * agriculture_workers * agriculture_hours) - (1 * mining_workers * mining_hours)
 
 
 def lumber_hour():
@@ -101,9 +106,3 @@ def mining_hour():
     chemical = chemical - 1
     mining = mining - 2
     mining = mining + 20
-
-
-
-
-
-
