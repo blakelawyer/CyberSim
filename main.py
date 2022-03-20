@@ -49,6 +49,8 @@ class Game:
         self.hour = 0
         self.minute = 0
 
+        self.lumber_background = pg.image.load("lumber-background.png")
+
     def load_data(self):
         game_folder = path.dirname(__file__)
         with open(path.join(game_folder, 'neighborhood-map.txt'), 'rt') as f:
@@ -204,15 +206,15 @@ class Game:
             self.minute += 1
             if tick % 60 == 0:
                 for worker in self.workers:
-                    if worker.job == "lumber" and worker.working:
+                    if worker.job == "lumber" and worker.working and self.hour > 2:
                         calculation.lumber_hour()
-                    elif worker.job == "nuclear" and worker.working:
+                    elif worker.job == "nuclear" and worker.working and self.hour > 2:
                         calculation.nuclear_hour()
-                    elif worker.job == "agriculture" and worker.working:
+                    elif worker.job == "agriculture" and worker.working and self.hour > 2:
                         calculation.agriculture_hour()
-                    elif worker.job == "chemical" and worker.working:
+                    elif worker.job == "chemical" and worker.working and self.hour > 2:
                         calculation.chemical_hour()
-                    elif worker.job == "mining" and worker.working:
+                    elif worker.job == "mining" and worker.working and self.hour > 2:
                         calculation.mining_hour()
             if self.minute % 60 == 0 and self.minute > 0:
                 self.minute = 0
@@ -239,7 +241,9 @@ class Game:
 
     def draw(self):
         self.screen.fill(BGCOLOR)
-        self.draw_grid()
+        if self.view == "lumber":
+            self.screen.blit(self.lumber_background, (64, 64))
+        #self.draw_grid()
         for sprite in self.all_sprites:
             if isinstance(sprite, Worker):
                 if self.view == sprite.location:
