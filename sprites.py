@@ -1,7 +1,6 @@
 import pygame as pg
 
 import settings
-import util
 from settings import *
 import random
 

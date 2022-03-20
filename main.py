@@ -2,6 +2,7 @@ import pygame as pg
 import sys
 from os import path
 import pygame.mouse
+import button
 import calculation
 import settings
 from settings import *
@@ -10,6 +11,13 @@ from sprites import *
 
 class Game:
     def __init__(self):
+        self.neighborhood_map_data = []
+        self.city_map_data = []
+        self.lumber_map_data = []
+        self.nuclear_map_data = []
+        self.agriculture_map_data = []
+        self.chemical_map_data = []
+        self.mining_map_data = []
         pg.init()
         self.screen = pg.display.set_mode((WIDTH, HEIGHT))
         pg.display.set_caption(TITLE)
@@ -17,17 +25,17 @@ class Game:
         pg.key.set_repeat(500, 100)
         self.load_data()
 
-        self.speed_up_button = Button(15, 65, "up-arrow.png")
-        self.speed_down_button = Button(15, 125, "down-arrow.png")
-        self.pause_button = Button(15, 185, "pause-button.png")
+        self.speed_up_button = button.Button(15, 65, "up-arrow.png")
+        self.speed_down_button = button.Button(15, 125, "down-arrow.png")
+        self.pause_button = button.Button(15, 185, "pause-button.png")
 
-        self.neighborhood_button = Button(15, 245, "neighborhood.png")
-        self.city_button = Button(15, 305, "city.png")
-        self.lumber_button = Button(15, 365, "lumber.png")
-        self.nuclear_button = Button(15, 425, "nuclear.png")
-        self.agriculture_button = Button(15, 485, "agriculture.png")
-        self.chemical_button = Button(15, 545, "chemical.png")
-        self.mining_button = Button(15, 605, "mining.png")
+        self.neighborhood_button = button.Button(15, 245, "neighborhood.png")
+        self.city_button = button.Button(15, 305, "city.png")
+        self.lumber_button = button.Button(15, 365, "lumber.png")
+        self.nuclear_button = button.Button(15, 425, "nuclear.png")
+        self.agriculture_button = button.Button(15, 485, "agriculture.png")
+        self.chemical_button = button.Button(15, 545, "chemical.png")
+        self.mining_button = button.Button(15, 605, "mining.png")
 
         self.all_sprites = pg.sprite.Group()
         self.walls = pg.sprite.Group()
@@ -43,31 +51,24 @@ class Game:
 
     def load_data(self):
         game_folder = path.dirname(__file__)
-        self.neighborhood_map_data = []
         with open(path.join(game_folder, 'neighborhood-map.txt'), 'rt') as f:
             for line in f:
                 self.neighborhood_map_data.append(line)
-        self.city_map_data = []
         with open(path.join(game_folder, 'city-map.txt'), 'rt') as f:
             for line in f:
                 self.city_map_data.append(line)
-        self.lumber_map_data = []
         with open(path.join(game_folder, 'lumber-map.txt'), 'rt') as f:
             for line in f:
                 self.lumber_map_data.append(line)
-        self.nuclear_map_data = []
         with open(path.join(game_folder, 'nuclear-map.txt'), 'rt') as f:
             for line in f:
                 self.nuclear_map_data.append(line)
-        self.agriculture_map_data = []
         with open(path.join(game_folder, 'agriculture-map.txt'), 'rt') as f:
             for line in f:
                 self.agriculture_map_data.append(line)
-        self.chemical_map_data = []
         with open(path.join(game_folder, 'chemical-map.txt'), 'rt') as f:
             for line in f:
                 self.chemical_map_data.append(line)
-        self.mining_map_data = []
         with open(path.join(game_folder, 'mining-map.txt'), 'rt') as f:
             for line in f:
                 self.mining_map_data.append(line)
@@ -283,8 +284,8 @@ class Game:
         if self.mining_button.draw(self.screen):
             self.mining_view()
 
-        show_resources(self.screen)
-        show_time(self, self.screen)
+        button.show_resources(self.screen)
+        button.show_time(self, self.screen)
         pg.display.flip()
 
     def events(self):
@@ -294,52 +295,6 @@ class Game:
             if event.type == pg.KEYDOWN:
                 if event.key == pg.K_ESCAPE:
                     self.quit()
-
-
-class Button:
-    def __init__(self, x, y, image):
-        self.image = pg.image.load(image).convert_alpha()
-        self.rect = self.image.get_rect()
-        self.rect.topleft = (x, y)
-        self.clicked = False
-
-    def draw(self, screen):
-        action = False
-        pos = pg.mouse.get_pos()
-        if self.rect.collidepoint(pos):
-            if pg.mouse.get_pressed()[0] == 1 and self.clicked == False:
-                self.clicked = True
-                action = True
-        if pygame.mouse.get_pressed()[0] == 0:
-            self.clicked = False
-        screen.blit(self.image, (self.rect.x, self.rect.y))
-        return action
-
-
-def show_resources(screen):
-    font = pg.font.SysFont('Arial', 24)
-    text = font.render("Lumber: " + str(calculation.lumber), True, WHITE, BLACK)
-    screen.blit(text, (70, 20))
-    text = font.render("Nuclear: " + str(calculation.nuclear), True, WHITE, BLACK)
-    screen.blit(text, (270, 20))
-    text = font.render("Agriculture: " + str(calculation.agriculture), True, WHITE, BLACK)
-    screen.blit(text, (470, 20))
-    text = font.render("Chemical: " + str(calculation.chemical), True, WHITE, BLACK)
-    screen.blit(text, (670, 20))
-    text = font.render("Mining: " + str(calculation.mining), True, WHITE, BLACK)
-    screen.blit(text, (870, 20))
-
-
-def show_time(game, screen):
-    font = pg.font.SysFont('Arial', 24)
-    text = font.render("Month: " + str(game.month), True, WHITE, BLACK)
-    screen.blit(text, (70, 720))
-    text = font.render("Day: " + str(game.day), True, WHITE, BLACK)
-    screen.blit(text, (270, 720))
-    text = font.render("Hour: " + str(game.hour), True, WHITE, BLACK)
-    screen.blit(text, (470, 720))
-    text = font.render("Minute: " + str(game.minute), True, WHITE, BLACK)
-    screen.blit(text, (670, 720))
 
 
 g = Game()
