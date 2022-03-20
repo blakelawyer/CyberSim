@@ -54,8 +54,45 @@ demand_0 = [100000, 100000, 100000, 100000, 100000]
 
 
 def net_lumber_calc():
-    return (25 * lumber_workers * lumber_hours * len(lumber_days) * 4) - (5 * lumber_workers * lumber_hours * len(lumber_days) * 4) - (
-                5 * agriculture_workers * agriculture_hours * len(agriculture_days) * 4) - (1 * mining_workers * mining_hours * len(mining_days) * 4)
+    return (25 * lumber_workers * lumber_hours * len(lumber_days) * 4) - (
+                5 * lumber_workers * lumber_hours * len(lumber_days) * 4) - (
+                   5 * agriculture_workers * agriculture_hours * len(agriculture_days) * 4) - (
+                       1 * mining_workers * mining_hours * len(mining_days) * 4)
+
+
+def net_nuclear_calc():
+    return (15 * nuclear_workers * nuclear_hours * len(nuclear_days) * 4) - (
+                2 * lumber_workers * lumber_hours * len(lumber_days) * 4) - (
+                   1 * nuclear_workers * nuclear_hours * len(nuclear_days) * 4) - (
+                       1 * agriculture_workers * agriculture_hours * len(agriculture_days) * 4) - (
+                   3 * chemical_workers * chemical_hours * len(chemical_days) * 4) - (
+                       2 * mining_workers * mining_hours * len(mining_days) * 4)
+
+
+def net_agriculture_calc():
+    return (100 * agriculture_workers * agriculture_hours * len(agriculture_days) * 4) - (
+                15 * lumber_workers * lumber_hours * len(lumber_days) * 4) - (
+                   10 * nuclear_workers * nuclear_hours * len(nuclear_days) * 4) - (
+                       20 * agriculture_workers * agriculture_hours * len(agriculture_days) * 4) - (
+                   10 * chemical_workers * chemical_hours * len(chemical_days) * 4) - (
+                       25 * mining_workers * mining_hours * len(mining_days) * 4)
+
+
+def net_chemical_calc():
+    return (40 * chemical_workers * chemical_hours * len(chemical_days) * 4) - (
+                   5 * nuclear_workers * nuclear_hours * len(nuclear_days) * 4) - (
+                   3 * agriculture_workers * agriculture_hours * len(agriculture_days) * 4) - (
+                   15 * chemical_workers * chemical_hours * len(chemical_days) * 4) - (
+                   1 * mining_workers * mining_hours * len(mining_days) * 4)
+
+
+def net_mining_calc():
+    return (20 * mining_workers * mining_hours * len(mining_days) * 4) - (
+            2 * lumber_workers * lumber_hours * len(lumber_days) * 4) - (
+                   2 * nuclear_workers * nuclear_hours * len(nuclear_days) * 4) - (
+                   1 * agriculture_workers * agriculture_hours * len(agriculture_days) * 4) - (
+                   5 * chemical_workers * chemical_hours * len(chemical_days) * 4) - (
+                   2 * mining_workers * mining_hours * len(mining_days) * 4)
 
 
 def lumber_hour():
