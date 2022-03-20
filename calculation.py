@@ -54,8 +54,8 @@ demand_0 = [100000, 100000, 100000, 100000, 100000]
 
 
 def net_lumber_calc():
-    return (25 * lumber_workers * lumber_hours) - (5 * lumber_workers * lumber_hours) - (
-                5 * agriculture_workers * agriculture_hours) - (1 * mining_workers * mining_hours)
+    return (25 * lumber_workers * lumber_hours * len(lumber_days) * 4) - (5 * lumber_workers * lumber_hours * len(lumber_days) * 4) - (
+                5 * agriculture_workers * agriculture_hours * len(agriculture_days) * 4) - (1 * mining_workers * mining_hours * len(mining_days) * 4)
 
 
 def lumber_hour():

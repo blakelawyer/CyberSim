@@ -92,6 +92,7 @@ class Worker(pg.sprite.Sprite):
         self.rect.y = self.y * settings.TILESIZE
 
     def update(self):
+        print(calculation.net_lumber_calc())
         # If workers finish their commute, take them to their workplace.
         if self.x == 59 and self.y == 43 and self.commuting_to_work:
             self.location = self.job
