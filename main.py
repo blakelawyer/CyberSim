@@ -134,8 +134,7 @@ class Game:
         settings.TILESIZE = 16
         for worker in self.workers:
             if worker.location == "neighborhood":
-                worker.image = pg.Surface((settings.TILESIZE, settings.TILESIZE))
-                worker.image.fill(worker.color)
+                worker.image = pg.image.load(worker.pic + "16.png")
                 worker.rect = worker.image.get_rect()
         self.view = 'neighborhood'
 
@@ -147,8 +146,7 @@ class Game:
         settings.TILESIZE = 32
         for worker in self.workers:
             if worker.location == "lumber":
-                worker.image = pg.Surface((settings.TILESIZE, settings.TILESIZE))
-                worker.image.fill(worker.color)
+                worker.image = pg.image.load(worker.pic + "32.png")
                 worker.rect = worker.image.get_rect()
                 worker.rect.x = worker.x * settings.TILESIZE
                 worker.rect.y = worker.y * settings.TILESIZE
@@ -158,8 +156,7 @@ class Game:
         settings.TILESIZE = 32
         for worker in self.workers:
             if worker.location == "nuclear":
-                worker.image = pg.Surface((settings.TILESIZE, settings.TILESIZE))
-                worker.image.fill(worker.color)
+                worker.image = pg.image.load(worker.pic + "32.png")
                 worker.rect = worker.image.get_rect()
                 worker.rect.x = worker.x * settings.TILESIZE
                 worker.rect.y = worker.y * settings.TILESIZE
@@ -169,8 +166,7 @@ class Game:
         settings.TILESIZE = 32
         for worker in self.workers:
             if worker.location == "agriculture":
-                worker.image = pg.Surface((settings.TILESIZE, settings.TILESIZE))
-                worker.image.fill(worker.color)
+                worker.image = pg.image.load(worker.pic + "32.png")
                 worker.rect = worker.image.get_rect()
                 worker.rect.x = worker.x * settings.TILESIZE
                 worker.rect.y = worker.y * settings.TILESIZE
@@ -180,8 +176,7 @@ class Game:
         settings.TILESIZE = 32
         for worker in self.workers:
             if worker.location == "chemical":
-                worker.image = pg.Surface((settings.TILESIZE, settings.TILESIZE))
-                worker.image.fill(worker.color)
+                worker.image = pg.image.load(worker.pic + "32.png")
                 worker.rect = worker.image.get_rect()
                 worker.rect.x = worker.x * settings.TILESIZE
                 worker.rect.y = worker.y * settings.TILESIZE
@@ -191,8 +186,7 @@ class Game:
         settings.TILESIZE = 32
         for worker in self.workers:
             if worker.location == "mining":
-                worker.image = pg.Surface((settings.TILESIZE, settings.TILESIZE))
-                worker.image.fill(worker.color)
+                worker.image = pg.image.load(worker.pic + "32.png")
                 worker.rect = worker.image.get_rect()
                 worker.rect.x = worker.x * settings.TILESIZE
                 worker.rect.y = worker.y * settings.TILESIZE

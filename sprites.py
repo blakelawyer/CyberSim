@@ -28,17 +28,22 @@ class Worker(pg.sprite.Sprite):
         self.groups = game.all_sprites, game.workers
         pg.sprite.Sprite.__init__(self, self.groups)
         self.game = game
-        self.image = pg.Surface((TILESIZE, TILESIZE))
+        #self.image = pg.Surface((TILESIZE, TILESIZE))
         if job == "lumber":
-            self.color = CHOCOLATE
+            self.image = pg.image.load("red-dino16.png")
+            self.pic = "red-dino"
         elif job == "nuclear":
-            self.color = GREEN
+            self.image = pg.image.load("green-dino16.png")
+            self.pic = "green-dino"
         elif job == "agriculture":
-            self.color = BLUE
+            self.image = pg.image.load("blue-dino16.png")
+            self.pic = "blue-dino"
         elif job == "chemical":
-            self.color = YELLOW
+            self.image = pg.image.load("yellow-dino16.png")
+            self.pic = "yellow-dino"
         else:
-            self.color = MAROON
+            self.image = pg.image.load("black-dino16.png")
+            self.pic = "black-dino"
         self.rect = self.image.get_rect()
         self.x = x
         self.y = y
