@@ -297,7 +297,17 @@ class Game:
 
         button.show_resources(self.screen)
         button.show_time(self, self.screen)
+        if self.view == "city":
+            button.show_settings(self.screen)
         pg.display.flip()
+
+        # lumber_hours len(lumber_days)
+        # nuclear_hours len(nuclear_days)
+        # agriculture_hours len(agriculture_days)
+        # chemical_hours len(chemical_days)
+        # mining_hours len(mining_days)
+
+
 
     def events(self):
         for event in pg.event.get():
