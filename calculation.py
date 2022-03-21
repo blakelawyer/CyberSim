@@ -1,30 +1,5 @@
 from scipy.optimize import linprog
 
-def linear_programming():
-
-    obj = [-1, -1]
-
-    lhs_ineq = [[10, 0],
-                [50, 0],
-                [0, 10],
-                [0, 50],
-                [20, 10]]
-
-    rhs_ineq = [[4800],
-                [12800],
-                [11200],
-                [16000],
-                [6400]]
-
-    bnd = [(0, float("inf")),  # Bounds of x
-           (0, float("inf"))]
-
-    opt = linprog(c=obj, A_ub=lhs_ineq, b_ub=rhs_ineq,
-                  bounds=bnd,
-                  method="revised simplex")
-
-    print(opt.x)
-
 lumber = 0
 nuclear = 0
 agriculture = 0
@@ -120,9 +95,8 @@ def make_roller_skates():
 def make_vitamins():
     global lumber, nuclear, agriculture, chemical, mining, vitamins
     vitamins += 1
-    nuclear = nuclear
-    agriculture = agriculture
-    chemical = chemical
+    agriculture -= 10
+    chemical -= 30
 
 
 def make_pet_food():
@@ -143,6 +117,7 @@ def make_mattress():
 def make_yo_yo():
     global lumber, nuclear, agriculture, chemical, mining, yo_yos
     yo_yos += 1
+    lumber -= 10
     agriculture -= 10
 
 
@@ -236,3 +211,38 @@ def mining_hour():
     chemical = chemical - 1
     mining = mining - 2
     mining = mining + 20
+
+
+def linear_programming():
+
+    obj = [-1, -1, -1, -1, -1, -1, -1, -1, -1, -1]
+
+    lhs_ineq = [[0, 10, 10, 0, 20, 10, 0, 0, 30, 10],
+                [10, 0, 20, 30, 0, 0, 0, 0, 0, 0],
+                [0, 50, 0, 0, 0, 0, 10, 30, 30, 10],
+                [50, 0, 10, 20, 0, 0, 30, 10, 0, 0],
+                [20, 10, 30, 40, 40, 20, 0, 0, 10, 0]]
+
+    rhs_ineq = [[net_lumber_calc()],
+                [net_nuclear_calc()],
+                [net_agriculture_calc()],
+                [net_chemical_calc()],
+                [net_mining_calc()]]
+
+    bnd = [(0, float("inf")),  # Energy Drinks
+           (0, float("inf")),  # Corn Flakes
+           (0, float("inf")),  # TV
+           (0, float("inf")),  # Computer
+           (0, float("inf")),  # Bicycle
+           (0, float("inf")),  # Roller Skates
+           (0, float("inf")),  # Vitamins
+           (0, float("inf")),  # Pet Food
+           (0, float("inf")),  # Mattresses
+           (0, float("inf"))  # Yo-yos
+           ]
+
+    opt = linprog(c=obj, A_ub=lhs_ineq, b_ub=rhs_ineq,
+                  bounds=bnd,
+                  method="revised simplex")
+
+    print(opt)

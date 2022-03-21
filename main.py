@@ -51,6 +51,7 @@ class Game:
         self.minute = 0
 
         self.lumber_background = pg.image.load("lumber-background.png")
+        self.city_background = pg.image.load("city-planning.png")
 
     def load_data(self):
         game_folder = path.dirname(__file__)
@@ -78,11 +79,6 @@ class Game:
 
     def setup(self):
 
-        calculation.linear_programming()
-        for i in range(160):
-            calculation.make_energy_drink()
-        for j in range(320):
-            calculation.make_corn_flakes()
         print(calculation.lumber)
         print(calculation.nuclear)
         print(calculation.agriculture)
@@ -258,6 +254,8 @@ class Game:
         self.screen.fill(BGCOLOR)
         if self.view == "lumber":
             self.screen.blit(self.lumber_background, (64, 64))
+        elif self.view == "city":
+            self.screen.blit(self.city_background, (64, 64))
         #self.draw_grid()
         for sprite in self.all_sprites:
             if isinstance(sprite, Worker):
