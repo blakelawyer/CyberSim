@@ -78,6 +78,17 @@ class Game:
 
     def setup(self):
 
+        calculation.linear_programming()
+        for i in range(160):
+            calculation.make_energy_drink()
+        for j in range(320):
+            calculation.make_corn_flakes()
+        print(calculation.lumber)
+        print(calculation.nuclear)
+        print(calculation.agriculture)
+        print(calculation.chemical)
+        print(calculation.mining)
+
         for worker in range(calculation.lumber_workers):
             Worker(self, 32, 24, 'lumber', 'neighborhood')
         for worker in range(calculation.nuclear_workers):

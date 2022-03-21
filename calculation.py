@@ -1,8 +1,46 @@
+from scipy.optimize import linprog
+
+def linear_programming():
+
+    obj = [-1, -1]
+
+    lhs_ineq = [[10, 0],
+                [50, 0],
+                [0, 10],
+                [0, 50],
+                [20, 10]]
+
+    rhs_ineq = [[4800],
+                [12800],
+                [11200],
+                [16000],
+                [6400]]
+
+    bnd = [(0, float("inf")),  # Bounds of x
+           (0, float("inf"))]
+
+    opt = linprog(c=obj, A_ub=lhs_ineq, b_ub=rhs_ineq,
+                  bounds=bnd,
+                  method="revised simplex")
+
+    print(opt.x)
+
 lumber = 0
 nuclear = 0
 agriculture = 0
 chemical = 0
 mining = 0
+
+energy_drinks = 0
+corn_flakes = 0
+TVs = 0
+computers = 0
+bicycles = 0
+roller_skates = 0
+vitamins = 0
+pet_food = 0
+mattresses = 0
+yo_yos = 0
 
 lumber_workers = 5
 nuclear_workers = 5
@@ -22,27 +60,6 @@ agriculture_days = [0, 1, 2, 3, 4]
 chemical_days = [0, 1, 2, 3, 4]
 mining_days = [0, 1, 2, 3, 4]
 
-# if self.day % 7 == 0:
-# print("Monday")
-# if self.day % 7 == 1:
-# print("Tuesday")
-# if self.day % 7 == 2:
-# print("Wednesday")
-# if self.day % 7 == 3:
-# print("Thursday")
-# if self.day % 7 == 4:
-# print("Friday")
-# if self.day % 7 == 5:
-# print("Saturday")
-# if self.day % 7 == 6:
-# print("Sunday")
-
-net_lumber = 560
-net_nuclear = 240
-net_agriculture = 800
-net_chemical = 640
-net_mining = 320
-
 input_output_table_0 = [[5, 0, 5, 0, 1],
                         [2, 1, 1, 3, 2],
                         [15, 10, 20, 10, 25],
@@ -53,34 +70,110 @@ input_output_table_0 = [[5, 0, 5, 0, 1],
 demand_0 = [100000, 100000, 100000, 100000, 100000]
 
 
+def make_energy_drink():
+    global lumber, nuclear, agriculture, chemical, mining, energy_drinks
+    energy_drinks += 1
+    nuclear -= 10
+    chemical -= 50
+    mining -= 20
+
+
+def make_corn_flakes():
+    global lumber, nuclear, agriculture, chemical, mining, corn_flakes
+    corn_flakes += 1
+    lumber -= 10
+    agriculture -= 50
+    mining -= 10
+
+
+def make_TV():
+    global lumber, nuclear, agriculture, chemical, mining, TVs
+    TVs += 1
+    lumber -= 10
+    nuclear -= 20
+    chemical -= 10
+    mining -= 30
+
+
+def make_computer():
+    global lumber, nuclear, agriculture, chemical, mining, computers
+    computers += 1
+    nuclear -= 30
+    chemical -= 20
+    mining -= 40
+
+
+def make_bicycle():
+    global lumber, nuclear, agriculture, chemical, mining, bicycles
+    bicycles += 1
+    lumber -= 20
+    mining -= 40
+
+
+def make_roller_skates():
+    global lumber, nuclear, agriculture, chemical, mining, roller_skates
+    roller_skates += 1
+    lumber -= 10
+    mining -= 20
+
+
+def make_vitamins():
+    global lumber, nuclear, agriculture, chemical, mining, vitamins
+    vitamins += 1
+    nuclear = nuclear
+    agriculture = agriculture
+    chemical = chemical
+
+
+def make_pet_food():
+    global lumber, nuclear, agriculture, chemical, mining, pet_food
+    pet_food += 1
+    agriculture -= 30
+    chemical -= 10
+
+
+def make_mattress():
+    global lumber, nuclear, agriculture, chemical, mining, mattresses
+    mattresses += 1
+    lumber -= 30
+    agriculture -= 30
+    mining -= 10
+
+
+def make_yo_yo():
+    global lumber, nuclear, agriculture, chemical, mining, yo_yos
+    yo_yos += 1
+    agriculture -= 10
+
+
 def net_lumber_calc():
     return (25 * lumber_workers * lumber_hours * len(lumber_days) * 4) - (
-                5 * lumber_workers * lumber_hours * len(lumber_days) * 4) - (
+            5 * lumber_workers * lumber_hours * len(lumber_days) * 4) - (
                    5 * agriculture_workers * agriculture_hours * len(agriculture_days) * 4) - (
-                       1 * mining_workers * mining_hours * len(mining_days) * 4)
+                   1 * mining_workers * mining_hours * len(mining_days) * 4)
 
 
 def net_nuclear_calc():
     return (15 * nuclear_workers * nuclear_hours * len(nuclear_days) * 4) - (
-                2 * lumber_workers * lumber_hours * len(lumber_days) * 4) - (
+            2 * lumber_workers * lumber_hours * len(lumber_days) * 4) - (
                    1 * nuclear_workers * nuclear_hours * len(nuclear_days) * 4) - (
-                       1 * agriculture_workers * agriculture_hours * len(agriculture_days) * 4) - (
+                   1 * agriculture_workers * agriculture_hours * len(agriculture_days) * 4) - (
                    3 * chemical_workers * chemical_hours * len(chemical_days) * 4) - (
-                       2 * mining_workers * mining_hours * len(mining_days) * 4)
+                   2 * mining_workers * mining_hours * len(mining_days) * 4)
 
 
 def net_agriculture_calc():
     return (100 * agriculture_workers * agriculture_hours * len(agriculture_days) * 4) - (
-                15 * lumber_workers * lumber_hours * len(lumber_days) * 4) - (
+            15 * lumber_workers * lumber_hours * len(lumber_days) * 4) - (
                    10 * nuclear_workers * nuclear_hours * len(nuclear_days) * 4) - (
-                       20 * agriculture_workers * agriculture_hours * len(agriculture_days) * 4) - (
+                   20 * agriculture_workers * agriculture_hours * len(agriculture_days) * 4) - (
                    10 * chemical_workers * chemical_hours * len(chemical_days) * 4) - (
-                       25 * mining_workers * mining_hours * len(mining_days) * 4)
+                   25 * mining_workers * mining_hours * len(mining_days) * 4)
 
 
 def net_chemical_calc():
     return (40 * chemical_workers * chemical_hours * len(chemical_days) * 4) - (
-                   5 * nuclear_workers * nuclear_hours * len(nuclear_days) * 4) - (
+            5 * nuclear_workers * nuclear_hours * len(nuclear_days) * 4) - (
                    3 * agriculture_workers * agriculture_hours * len(agriculture_days) * 4) - (
                    15 * chemical_workers * chemical_hours * len(chemical_days) * 4) - (
                    1 * mining_workers * mining_hours * len(mining_days) * 4)
