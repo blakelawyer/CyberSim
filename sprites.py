@@ -92,6 +92,19 @@ class Worker(pg.sprite.Sprite):
         self.rect.y = self.y * settings.TILESIZE
 
     def update(self):
+
+        for worker in self.game.workers:
+            if worker.job == "lumber":
+                worker.working_hours = calculation.lumber_hours
+            elif worker.job == "nuclear":
+                worker.working_hours = calculation.nuclear_hours
+            elif worker.job == "agriculture":
+                worker.working_hours = calculation.agriculture_hours
+            elif worker.job == "chemical":
+                worker.working_hours = calculation.chemical_hours
+            elif worker.job == "mining":
+                worker.working_hours = calculation.mining_hours
+
         # If workers finish their commute, take them to their workplace.
         if self.x == 59 and self.y == 43 and self.commuting_to_work:
             self.location = self.job
