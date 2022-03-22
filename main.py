@@ -42,6 +42,8 @@ class Game:
         self.workers = pg.sprite.Group()
 
         self.paused = False
+        self.editing = "N/A"
+        self.value = 0
         self.view = 'neighborhood'
 
         self.month = 0
@@ -78,12 +80,6 @@ class Game:
                 self.mining_map_data.append(line)
 
     def setup(self):
-
-        print(calculation.lumber)
-        print(calculation.nuclear)
-        print(calculation.agriculture)
-        print(calculation.chemical)
-        print(calculation.mining)
 
         for worker in range(calculation.lumber_workers):
             Worker(self, 32, 24, 'lumber', 'neighborhood')
@@ -298,16 +294,8 @@ class Game:
         button.show_resources(self.screen)
         button.show_time(self, self.screen)
         if self.view == "city":
-            button.show_settings(self.screen)
+            button.show_settings(self, self.screen)
         pg.display.flip()
-
-        # lumber_hours len(lumber_days)
-        # nuclear_hours len(nuclear_days)
-        # agriculture_hours len(agriculture_days)
-        # chemical_hours len(chemical_days)
-        # mining_hours len(mining_days)
-
-
 
     def events(self):
         for event in pg.event.get():
@@ -316,6 +304,208 @@ class Game:
             if event.type == pg.KEYDOWN:
                 if event.key == pg.K_ESCAPE:
                     self.quit()
+                if event.key == pg.K_a:
+                    self.editing = "Lumber"
+                if event.key == pg.K_b:
+                    self.editing = "Nuclear"
+                if event.key == pg.K_c:
+                    self.editing = "Agriculture"
+                if event.key == pg.K_d:
+                    self.editing = "Chemical"
+                if event.key == pg.K_e:
+                    self.editing = "Mining"
+                if event.key == pg.K_1:
+                    self.editing = "Energy Drinks"
+                if event.key == pg.K_2:
+                    self.editing = "Corn Flakes"
+                if event.key == pg.K_3:
+                    self.editing = "TVs"
+                if event.key == pg.K_4:
+                    self.editing = "Computers"
+                if event.key == pg.K_5:
+                    self.editing = "Bicycles"
+                if event.key == pg.K_6:
+                    self.editing = "Roller Skates"
+                if event.key == pg.K_7:
+                    self.editing = "Vitamins"
+                if event.key == pg.K_8:
+                    self.editing = "Pet Food"
+                if event.key == pg.K_9:
+                    self.editing = "Mattresses"
+                if event.key == pg.K_0:
+                    self.editing = "Yo-yos"
+
+                if event.key == pg.K_UP:
+                    if self.editing == "Lumber":
+                        if self.value == 0:
+                            calculation.lumber_hours += 1
+                        elif self.value == 1:
+                            if len(calculation.lumber_days) < 7:
+                                calculation.lumber_days.append(len(calculation.lumber_days))
+                    if self.editing == "Nuclear":
+                        if self.value == 0:
+                            calculation.nuclear_hours += 1
+                        elif self.value == 1:
+                            if len(calculation.nuclear_days) < 7:
+                                calculation.nuclear_days.append(len(calculation.nuclear_days))
+                    if self.editing == "Agriculture":
+                        if self.value == 0:
+                            calculation.agriculture_hours += 1
+                        elif self.value == 1:
+                            if len(calculation.agriculture_days) < 7:
+                                calculation.agriculture_days.append(len(calculation.agriculture_days))
+                    if self.editing == "Chemical":
+                        if self.value == 0:
+                            calculation.chemical_hours += 1
+                        elif self.value == 1:
+                            if len(calculation.chemical_days) < 7:
+                                calculation.chemical_days.append(len(calculation.chemical_days))
+                    if self.editing == "Mining":
+                        if self.value == 0:
+                            calculation.mining_hours += 1
+                        elif self.value == 1:
+                            if len(calculation.mining_days) < 7:
+                                calculation.mining_days.append(len(calculation.mining_days))
+                    if self.editing == "Energy Drinks":
+                        if self.value == 0:
+                            calculation.energy_drinks_min += 1
+                        elif self.value == 1:
+                            calculation.energy_drinks_max += 50
+                    if self.editing == "Corn Flakes":
+                        if self.value == 0:
+                            calculation.corn_flakes_min += 1
+                        elif self.value == 1:
+                            calculation.corn_flakes_max += 50
+                    if self.editing == "TVs":
+                        if self.value == 0:
+                            calculation.TVs_min += 1
+                        elif self.value == 1:
+                            calculation.TVs_max += 50
+                    if self.editing == "Computers":
+                        if self.value == 0:
+                            calculation.computers_min += 1
+                        elif self.value == 1:
+                            calculation.computers_max += 50
+                    if self.editing == "Bicycles":
+                        if self.value == 0:
+                            calculation.bicycles_min += 1
+                        elif self.value == 1:
+                            calculation.bicycles_max += 50
+                    if self.editing == "Roller Skates":
+                        if self.value == 0:
+                            calculation.roller_skates_min += 1
+                        elif self.value == 1:
+                            calculation.roller_skates_max += 50
+                    if self.editing == "Vitamins":
+                        if self.value == 0:
+                            calculation.vitamins_min += 1
+                        elif self.value == 1:
+                            calculation.vitamins_max += 50
+                    if self.editing == "Pet Food":
+                        if self.value == 0:
+                            calculation.pet_food_min += 1
+                        elif self.value == 1:
+                            calculation.pet_food_max += 50
+                    if self.editing == "Mattresses":
+                        if self.value == 0:
+                            calculation.mattresses_min += 1
+                        elif self.value == 1:
+                            calculation.mattresses_max += 50
+                    if self.editing == "Yo-yos":
+                        if self.value == 0:
+                            calculation.yo_yos_min += 1
+                        elif self.value == 1:
+                            calculation.yo_yos_max += 50
+                if event.key == pg.K_DOWN:
+                    if self.editing == "Lumber":
+                        if self.value == 0:
+                            calculation.lumber_hours -= 1
+                        elif self.value == 1:
+                            if len(calculation.lumber_days) > 0:
+                                del calculation.lumber_days[-1]
+                    if self.editing == "Nuclear":
+                        if self.value == 0:
+                            calculation.nuclear_hours -= 1
+                        elif self.value == 1:
+                            if len(calculation.nuclear_days) > 0:
+                                del calculation.nuclear_days[-1]
+                    if self.editing == "Agriculture":
+                        if self.value == 0:
+                            calculation.agriculture_hours -= 1
+                        elif self.value == 1:
+                            if len(calculation.agriculture_days) > 0:
+                                del calculation.agriculture_days[-1]
+                    if self.editing == "Chemical":
+                        if self.value == 0:
+                            calculation.chemical_hours -= 1
+                        elif self.value == 1:
+                            if len(calculation.chemical_days) > 0:
+                                del calculation.chemical_days[-1]
+                    if self.editing == "Mining":
+                        if self.value == 0:
+                            calculation.mining_hours -= 1
+                        elif self.value == 1:
+                            if len(calculation.mining_days) > 0:
+                                del calculation.mining_days[-1]
+                    if self.editing == "Energy Drinks":
+                        if self.value == 0:
+                            calculation.energy_drinks_min -= 1
+                        elif self.value == 1:
+                            calculation.energy_drinks_max -= 1
+                    if self.editing == "Corn Flakes":
+                        if self.value == 0:
+                            calculation.corn_flakes_min -= 1
+                        elif self.value == 1:
+                            calculation.corn_flakes_max -= 1
+                    if self.editing == "TVs":
+                        if self.value == 0:
+                            calculation.TVs_min -= 1
+                        elif self.value == 1:
+                            calculation.TVs_max -= 1
+                    if self.editing == "Computers":
+                        if self.value == 0:
+                            calculation.computers_min -= 1
+                        elif self.value == 1:
+                            calculation.computers_max -= 1
+                    if self.editing == "Bicycles":
+                        if self.value == 0:
+                            calculation.bicycles_min -= 1
+                        elif self.value == 1:
+                            calculation.bicycles_max -= 1
+                    if self.editing == "Roller Skates":
+                        if self.value == 0:
+                            calculation.roller_skates_min -= 1
+                        elif self.value == 1:
+                            calculation.roller_skates_max -= 1
+                    if self.editing == "Vitamins":
+                        if self.value == 0:
+                            calculation.vitamins_min -= 1
+                        elif self.value == 1:
+                            calculation.vitamins_max -= 1
+                    if self.editing == "Pet Food":
+                        if self.value == 0:
+                            calculation.pet_food_min -= 1
+                        elif self.value == 1:
+                            calculation.pet_food_max -= 1
+                    if self.editing == "Mattresses":
+                        if self.value == 0:
+                            calculation.mattresses_min -= 1
+                        elif self.value == 1:
+                            calculation.mattresses_max -= 1
+                    if self.editing == "Yo-yos":
+                        if self.value == 0:
+                            calculation.yo_yos_min -= 1
+                        elif self.value == 1:
+                            calculation.yo_yos_max -= 1
+
+                if event.key == pg.K_SPACE:
+                    if self.value >= 1:
+                        self.value = 0
+                    else:
+                        self.value += 1
+
+                if event.key == pg.K_RETURN:
+                    calculation.linear_programming()
 
 
 g = Game()

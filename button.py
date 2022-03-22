@@ -52,7 +52,7 @@ def show_time(game, screen):
     screen.blit(text, (870, 720))
 
 
-def show_settings(screen):
+def show_settings(self, screen):
     font = pg.font.SysFont('Arial', 24)
     text = font.render("Hours/Days/Net Output", True, BLACK,
                        WHITE)
@@ -89,60 +89,54 @@ def show_settings(screen):
     screen.blit(text, (580, 210))
 
     font = pg.font.SysFont('Arial', 16)
-    text = font.render("1. Energy Drinks: " + str((0, 999)), True, BLACK,
+    text = font.render("1. Energy Drinks: " + str((calculation.energy_drinks_min, calculation.energy_drinks_max)), True, BLACK,
                        WHITE)
     screen.blit(text, (580, 250))
     font = pg.font.SysFont('Arial', 16)
-    text = font.render("2. Corn Flakes: " + str((0, 999)), True, BLACK,
+    text = font.render("2. Corn Flakes: " + str((calculation.corn_flakes_min, calculation.corn_flakes_max)), True, BLACK,
                        WHITE)
     screen.blit(text, (580, 275))
     font = pg.font.SysFont('Arial', 16)
-    text = font.render("3. TVs: " + str((0, 999)), True, BLACK,
+    text = font.render("3. TVs: " + str((calculation.TVs_min, calculation.TVs_max)), True, BLACK,
                        WHITE)
     screen.blit(text, (580, 300))
     font = pg.font.SysFont('Arial', 16)
-    text = font.render("4. Computers: " + str((0, 999)), True, BLACK,
+    text = font.render("4. Computers: " + str((calculation.computers_min, calculation.computers_max)), True, BLACK,
                        WHITE)
     screen.blit(text, (580, 325))
     font = pg.font.SysFont('Arial', 16)
-    text = font.render("5. Bicycles: " + str((0, 999)), True, BLACK,
+    text = font.render("5. Bicycles: " + str((calculation.bicycles_min, calculation.bicycles_max)), True, BLACK,
                        WHITE)
     screen.blit(text, (580, 350))
     font = pg.font.SysFont('Arial', 16)
-    text = font.render("6. Roller Skates: " + str((0, 999)), True, BLACK,
+    text = font.render("6. Roller Skates: " + str((calculation.roller_skates_min, calculation.roller_skates_max)), True, BLACK,
                        WHITE)
     screen.blit(text, (580, 375))
     font = pg.font.SysFont('Arial', 16)
-    text = font.render("7. Vitamins: " + str((0, 999)), True, BLACK,
+    text = font.render("7. Vitamins: " + str((calculation.vitamins_min, calculation.vitamins_max)), True, BLACK,
                        WHITE)
     screen.blit(text, (580, 400))
     font = pg.font.SysFont('Arial', 16)
-    text = font.render("8. Pet Food: " + str((0, 999)), True, BLACK,
+    text = font.render("8. Pet Food: " + str((calculation.pet_food_min, calculation.pet_food_max)), True, BLACK,
                        WHITE)
     screen.blit(text, (580, 425))
     font = pg.font.SysFont('Arial', 16)
-    text = font.render("9. Mattresses: " + str((0, 999)), True, BLACK,
+    text = font.render("9. Mattresses: " + str((calculation.mattresses_min, calculation.mattresses_max)), True, BLACK,
                        WHITE)
     screen.blit(text, (580, 450))
     font = pg.font.SysFont('Arial', 16)
-    text = font.render("10. Yo-yos: " + str((0, 999)), True, BLACK,
+    text = font.render("10. Yo-yos: " + str((calculation.yo_yos_min, calculation.yo_yos_max)), True, BLACK,
                        WHITE)
     screen.blit(text, (580, 475))
 
-    bnd = [(0, float("inf")),  # Energy Drinks
-           (0, float("inf")),  # Corn Flakes
-           (0, float("inf")),  # TV
-           (0, float("inf")),  # Computer
-           (0, float("inf")),  # Bicycle
-           (0, float("inf")),  # Roller Skates
-           (0, float("inf")),  # Vitamins
-           (0, float("inf")),  # Pet Food
-           (0, float("inf")),  # Mattresses
-           (0, float("inf"))  # Yo-yos
-           ]
 
-    # lumber_hours len(lumber_days)
-    # nuclear_hours len(nuclear_days)
-    # agriculture_hours len(agriculture_days)
-    # chemical_hours len(chemical_days)
-    # mining_hours len(mining_days)
+    font = pg.font.SysFont('Arial', 16)
+    text = font.render("Editing: " + self.editing + " " + str(self.value), True, BLACK,
+                       WHITE)
+    screen.blit(text, (230, 540))
+
+    font = pg.font.SysFont('Arial', 16)
+    text = font.render(str([calculation.energy_drinks_to_make, calculation.corn_flakes_to_make, calculation.TVs_to_make, calculation.computers_to_make, calculation.bicycles_to_make, calculation.roller_skates_to_make, calculation.vitamins_to_make, calculation.pet_food_to_make, calculation.mattresses_to_make, calculation.yo_yos_to_make]), True, BLACK,
+                       WHITE)
+    screen.blit(text, (430, 540))
+

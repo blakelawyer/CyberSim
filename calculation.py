@@ -1,3 +1,5 @@
+import math
+
 from scipy.optimize import linprog
 
 lumber = 0
@@ -16,6 +18,38 @@ vitamins = 0
 pet_food = 0
 mattresses = 0
 yo_yos = 0
+
+energy_drinks_min = 0
+energy_drinks_max = 0
+corn_flakes_min = 0
+corn_flakes_max = 0
+TVs_min = 0
+TVs_max = 0
+computers_min = 0
+computers_max = 0
+bicycles_min = 0
+bicycles_max = 0
+roller_skates_min = 0
+roller_skates_max = 0
+vitamins_min = 0
+vitamins_max = 0
+pet_food_min = 0
+pet_food_max = 0
+mattresses_min = 0
+mattresses_max = 0
+yo_yos_min = 0
+yo_yos_max = 0
+
+energy_drinks_to_make = 0
+corn_flakes_to_make = 0
+TVs_to_make = 0
+computers_to_make = 0
+bicycles_to_make = 0
+roller_skates_to_make = 0
+vitamins_to_make = 0
+pet_food_to_make = 0
+mattresses_to_make = 0
+yo_yos_to_make = 0
 
 lumber_workers = 5
 nuclear_workers = 5
@@ -215,6 +249,8 @@ def mining_hour():
 
 def linear_programming():
 
+    global energy_drinks_to_make, corn_flakes_to_make, TVs_to_make, computers_to_make, bicycles_to_make, roller_skates_to_make, vitamins_to_make, pet_food_to_make, mattresses_to_make, yo_yos_to_make
+
     obj = [-1, -1, -1, -1, -1, -1, -1, -1, -1, -1]
 
     lhs_ineq = [[0, 10, 10, 0, 20, 10, 0, 0, 30, 10],
@@ -229,20 +265,29 @@ def linear_programming():
                 [net_chemical_calc()],
                 [net_mining_calc()]]
 
-    bnd = [(0, float("inf")),  # Energy Drinks
-           (0, float("inf")),  # Corn Flakes
-           (0, float("inf")),  # TV
-           (0, float("inf")),  # Computer
-           (0, float("inf")),  # Bicycle
-           (0, float("inf")),  # Roller Skates
-           (0, float("inf")),  # Vitamins
-           (0, float("inf")),  # Pet Food
-           (0, float("inf")),  # Mattresses
-           (0, float("inf"))  # Yo-yos
+    bnd = [(energy_drinks_min, float(energy_drinks_max)),  # Energy Drinks
+           (corn_flakes_min, float(corn_flakes_max)),  # Corn Flakes
+           (TVs_min, float(TVs_max)),  # TV
+           (computers_min, float(computers_max)),  # Computer
+           (bicycles_min, float(bicycles_max)),  # Bicycle
+           (roller_skates_min, float(roller_skates_max)),  # Roller Skates
+           (vitamins_min, float(vitamins_max)),  # Vitamins
+           (pet_food_min, float(pet_food_max)),  # Pet Food
+           (mattresses_min, float(mattresses_max)),  # Mattresses
+           (yo_yos_min, float(yo_yos_max))  # Yo-yos
            ]
 
     opt = linprog(c=obj, A_ub=lhs_ineq, b_ub=rhs_ineq,
                   bounds=bnd,
                   method="revised simplex")
 
-    print(opt)
+    energy_drinks_to_make = math.floor(opt.x[0])
+    corn_flakes_to_make = math.floor(opt.x[1])
+    TVs_to_make = math.floor(opt.x[2])
+    computers_to_make = math.floor(opt.x[3])
+    bicycles_to_make = math.floor(opt.x[4])
+    roller_skates_to_make = math.floor(opt.x[5])
+    vitamins_to_make = math.floor(opt.x[6])
+    pet_food_to_make = math.floor(opt.x[7])
+    mattresses_to_make = math.floor(opt.x[8])
+    yo_yos_to_make = math.floor(opt.x[9])
