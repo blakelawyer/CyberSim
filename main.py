@@ -52,7 +52,12 @@ class Game:
         self.hour = 0
         self.minute = 0
 
+        self.neighborhood_background = pg.image.load("neighborhood-background.png")
         self.lumber_background = pg.image.load("lumber-background.png")
+        self.nuclear_background = pg.image.load("nuclear-background.png")
+        self.chemical_background = pg.image.load("chemical-background.png")
+        self.agriculture_background = pg.image.load("agriculture-background.png")
+        self.mining_background = pg.image.load("mining-background.png")
         self.city_background = pg.image.load("city-planning.png")
 
     def load_data(self):
@@ -224,6 +229,48 @@ class Game:
                 self.minute = 0
                 self.hour += 1
             if self.hour % 16 == 0 and self.hour > 0:
+                for i in range(100):
+                    if calculation.energy_drinks < calculation.energy_drinks_to_make:
+                        if calculation.nuclear >= 10 and calculation.chemical >= 50 and calculation.mining >= 20:
+                            calculation.make_energy_drink()
+                            calculation.energy_drinks_to_make -= 1
+                    if calculation.corn_flakes < calculation.corn_flakes_to_make:
+                        if calculation.lumber >= 10 and calculation.agriculture >= 50 and calculation.mining >= 10:
+                            calculation.make_corn_flakes()
+                            calculation.corn_flakes_to_make -= 1
+                    if calculation.TVs < calculation.TVs_to_make:
+                        if calculation.lumber >= 10 and calculation.nuclear >= 20 and calculation.chemical >= 10 and calculation.mining >= 30:
+                            calculation.make_TV()
+                            calculation.TVs_to_make -= 1
+                    if calculation.computers < calculation.computers_to_make:
+                        if calculation.nuclear >= 30 and calculation.chemical >= 20 and calculation.mining >= 40:
+                            calculation.make_computer()
+                            calculation.computers_to_make -= 1
+                    if calculation.bicycles < calculation.bicycles_to_make:
+                        if calculation.lumber >= 20 and calculation.mining >= 40:
+                            calculation.make_bicycle()
+                            calculation.bicycles_to_make -= 1
+                    if calculation.roller_skates < calculation.roller_skates_to_make:
+                        if calculation.lumber >= 10 and calculation.mining >= 20:
+                            calculation.make_roller_skates()
+                            calculation.roller_skates_to_make -= 1
+                    if calculation.vitamins < calculation.vitamins_to_make:
+                        if calculation.agriculture >= 10 and calculation.chemical >= 30:
+                            calculation.make_vitamins()
+                            calculation.vitamins_to_make -= 1
+                    if calculation.pet_food < calculation.pet_food_to_make:
+                        if calculation.agriculture >= 30 and calculation.chemical >= 10:
+                            calculation.make_pet_food()
+                            calculation.pet_food_to_make -= 1
+                    if calculation.mattresses < calculation.mattresses_to_make:
+                        if calculation.lumber >= 30 and calculation.agriculture >= 30 and calculation.mining >= 10:
+                            calculation.make_mattress()
+                            calculation.mattresses_to_make -= 1
+                    if calculation.yo_yos < calculation.yo_yos_to_make:
+                        if calculation.lumber >= 10 and calculation.agriculture >= 10:
+                            calculation.make_yo_yo()
+                            calculation.yo_yos_to_make -= 1
+                print(calculation.energy_drinks, calculation.corn_flakes, calculation.TVs, calculation.computers, calculation.bicycles, calculation.roller_skates, calculation.vitamins, calculation.pet_food, calculation.mattresses, calculation.yo_yos)
                 self.hour = 0
                 self.day += 1
             if self.day % 7 == 0 and self.day > 0:
@@ -248,8 +295,18 @@ class Game:
 
     def draw(self):
         self.screen.fill(BGCOLOR)
+        if self.view == "neighborhood":
+            self.screen.blit(self.neighborhood_background, (64, 64))
         if self.view == "lumber":
             self.screen.blit(self.lumber_background, (64, 64))
+        elif self.view == "nuclear":
+            self.screen.blit(self.nuclear_background, (64, 64))
+        elif self.view == "chemical":
+            self.screen.blit(self.chemical_background, (64, 64))
+        elif self.view == "agriculture":
+            self.screen.blit(self.agriculture_background, (64, 64))
+        elif self.view == "mining":
+            self.screen.blit(self.mining_background, (64, 64))
         elif self.view == "city":
             self.screen.blit(self.city_background, (64, 64))
         #self.draw_grid()

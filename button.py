@@ -140,3 +140,13 @@ def show_settings(self, screen):
                        WHITE)
     screen.blit(text, (430, 540))
 
+
+    font = pg.font.SysFont('Arial', 24)
+    text = font.render(str([calculation.energy_drinks, calculation.corn_flakes, calculation.TVs,
+                            calculation.computers, calculation.bicycles,
+                            calculation.roller_skates, calculation.vitamins,
+                            calculation.pet_food, calculation.mattresses, calculation.yo_yos]),
+                       True, BLACK,
+                       WHITE)
+    screen.blit(text, (400, 600))
+
